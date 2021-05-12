@@ -1,4 +1,4 @@
-module github.com/loststar527/wxofficial
+module github.com/star-os/wxofficial
 
 go 1.16
 
