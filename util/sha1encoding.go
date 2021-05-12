@@ -1,3 +1,4 @@
+// 接入
 package util
 
 import (
@@ -8,9 +9,8 @@ import (
 )
 
 //进行sha1加密
-func EncodingSha1(params ...string) string {
+func Encoding(params ...string) string {
 	sort.Strings(params)
 	str := strings.Join(params, "")
 	return fmt.Sprintf("%x", sha1.Sum([]byte(str)))
-
 }

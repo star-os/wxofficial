@@ -1,16 +1,8 @@
 package config
 
-import (
-	"github.com/spf13/viper"
-
-)
-
-//初始化配置文件路径
-func Init() {
-
+type WxConfig struct {
+	Token         string
+	EcodingAESKey string
+	AppId         string
+	AppSecret     string
 }
-
-var (
-	Token string	//自己设置的token
-
-)

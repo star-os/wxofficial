@@ -1,12 +1,11 @@
 package message
 
-import ()
-
 type CDATA struct {
 	Text string
 }
 
-type msgHead struct {
+// 通用消息头
+type MsgHead struct {
 	ToUserName   CDATA
 	FromUserName CDATA
 	CreateTime   int64
