@@ -58,3 +58,4 @@ type Article struct {
 	PicUrl      CDATA
 	Url         CDATA
 }
+

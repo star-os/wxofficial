@@ -2,7 +2,7 @@ package config
 
 type WxConfig struct {
 	Token         string
-	EcodingAESKey string
+	EncodingAESKey string
 	AppId         string
 	AppSecret     string
 }
