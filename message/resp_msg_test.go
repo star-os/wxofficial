@@ -18,14 +18,13 @@ func Test1(t *testing.T) {
 	t.Errorf("ddd")
 }
 
-
 func Test2(t *testing.T) {
-	text, _ := NewRespMsg(&ReqMsg{},&Resource{MsgType: `Image`})
-	x, _ := xml.MarshalIndent(text,"    ","    ")
+	text, _ := NewRespMsg(&ReqMsg{}, &Resource{MsgType: `Image`})
+	x, _ := xml.MarshalIndent(text, "    ", "    ")
 	t.Errorf(string(x))
 }
 
 func Test3(t *testing.T) {
 	r := Resource{}
-	t.Errorf("%d",unsafe.Sizeof(r))
+	t.Errorf("%d", unsafe.Sizeof(r))
 }

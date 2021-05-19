@@ -21,7 +21,7 @@ type MsgHead struct {
 }
 
 // NewMsgHead 通过ReqMsg构建RespMsg
-func NewMsgHead(req *ReqMsg,msgType string) *MsgHead {
+func NewMsgHead(req *ReqMsg, msgType string) *MsgHead {
 	return &MsgHead{
 		ToUserName:   req.FromUserName,
 		FromUserName: req.ToUserName,

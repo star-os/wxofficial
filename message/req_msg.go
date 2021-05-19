@@ -1,4 +1,5 @@
 package message
+
 // 定义微信方发送的请求消息
 
 // ReqMsg 微信发来的消息&事件
