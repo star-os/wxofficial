@@ -3,6 +3,7 @@ package context
 import (
 	"fmt"
 	json "github.com/json-iterator/go"
+	"github.com/star-os/wxofficial/util"
 	"testing"
 )
 
@@ -21,8 +22,7 @@ func HelpInitContext() *Context {
 	accessToken := AccessToken{
 		AToken:    "",
 		ExpiresIn: 0,
-		ErrCode:   0,
-		ErrMsg:    "",
+		ErrInfo:   util.ErrInfo{},
 	}
 
 	context := &Context{
@@ -48,9 +48,8 @@ func Test(t *testing.T) {
 	At := &AccessToken{
 		AToken:    "s",
 		ExpiresIn: 0,
-		ErrCode:   0,
-		ErrMsg:    "ddd",
+		ErrInfo:   util.ErrInfo{},
 	}
-	json.Unmarshal([]byte(js),At)
-	fmt.Println("%+V",At)
+	json.Unmarshal([]byte(js), At)
+	fmt.Println("%+V", At)
 }

@@ -1,8 +1,6 @@
 package wxofficial
 
 import (
-	"fmt"
-	"github.com/gin-gonic/gin"
 	"github.com/star-os/wxofficial/context"
 )
 
@@ -11,7 +9,10 @@ type WeChat struct {
 	context.Context
 }
 
+func NewWeChat() *WeChat {
+	return &WeChat{}
+}
+
 func Do() {
-	gin.Default()
-	fmt.Println("as")
+
 }

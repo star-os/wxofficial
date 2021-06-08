@@ -22,11 +22,13 @@ type Context struct {
 
 }
 
+func NewContext(config Config) *Context {
+	return &Context{Config: config}
+}
+
 // InitContext 初始化一个Context，并启动AccessToken的中控goroutine
 func InitContext(cfg Config) *Context {
-	c := &Context{
-		Config: cfg,
-	}
+	c := NewContext(cfg)
 
 	// 初始化AccessToken部分
 	err := c.UpdateAccessToken()

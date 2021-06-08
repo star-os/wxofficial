@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	json "github.com/json-iterator/go"
+	"github.com/star-os/wxofficial/util"
 	"io/ioutil"
 	"net/http"
 	"time"
@@ -17,9 +18,8 @@ const (
 // AccessToken 用于存放向微信请求ACCESS_TOKEN以后的返回消息
 type AccessToken struct {
 	AToken    string `json:"access_token"` //凭证
-	ExpiresIn int    `json:"expires_in"`
-	ErrCode   int    `json:"errcode"`
-	ErrMsg    string `json:"errmsg"`
+	ExpiresIn int64  `json:"expires_in"`
+	util.ErrInfo
 }
 
 // GetAccessToken 获取AccessToken
@@ -66,6 +66,10 @@ func (c *Context) buildUrl() string {
 	return fmt.Sprintf(UrlTemplate, GrantTypeAccessToken, c.AppId, c.AppSecret)
 }
 
+func (c *Context) buildUrlWithAT(url string) string {
+	return fmt.Sprintf(url, c.AToken)
+}
+
 // 设置AccessToken
 func (c *Context) setAccessToken(tokenJson []byte) error {
 	accToken := new(AccessToken)
@@ -94,7 +98,7 @@ func (c *Context) checkAccessTokenError() (bool, error) {
 	return false, errors.New(fmt.Sprintf("AccessTokenError: ErrCode: %d, ErrMsg: %s", c.ErrCode, c.ErrMsg))
 }
 
-// AccessTokenUpdateDaemon 用于自动刷新AccessToken
+// AccessTokenUpdateDaemon 用于主动/被动刷新AccessToken
 func (c *Context) AccessTokenUpdateDaemon() {
 	ticker := time.NewTicker(time.Duration(c.ExpiresIn - ExpireForward))
 	for {
