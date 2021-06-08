@@ -8,8 +8,8 @@ import (
 )
 
 // CheckSignature 用于校验signature，接入微信平台
-func (w *WeChat) CheckSignature(signature, nonce, timestamp string) bool {
-	checkString := Encoding(nonce, timestamp, w.Token)
+func (c *Context) CheckSignature(signature, nonce, timestamp string) bool {
+	checkString := Encoding(nonce, timestamp, c.Token)
 	return signature == checkString
 }
 

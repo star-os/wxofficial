@@ -1,14 +1,15 @@
-package context
+package accesstoken
 
 import (
 	"fmt"
 	json "github.com/json-iterator/go"
+	"github.com/star-os/wxofficial"
 	"github.com/star-os/wxofficial/util"
 	"testing"
 )
 
-func HelpInitConfig() *Config {
-	cfg := &Config{
+func HelpInitConfig() *wxofficial.Config {
+	cfg := &wxofficial.Config{
 		Token:          "TestToken",
 		EncodingAESKey: "TestEncodingAESKey",
 		AppId:          "wx02e9b7a7e601ce1b",
@@ -17,7 +18,7 @@ func HelpInitConfig() *Config {
 	return cfg
 }
 
-func HelpInitContext() *Context {
+func HelpInitContext() *wxofficial.Context {
 	cfg := HelpInitConfig()
 	accessToken := AccessToken{
 		AToken:    "",
@@ -25,7 +26,7 @@ func HelpInitContext() *Context {
 		ErrInfo:   util.ErrInfo{},
 	}
 
-	context := &Context{
+	context := &wxofficial.Context{
 		Config:      *cfg,
 		AccessToken: accessToken,
 		UpdateChan:  nil,
@@ -35,7 +36,7 @@ func HelpInitContext() *Context {
 
 // 得到空的内容
 func TestContext_GetAccessToken(t *testing.T) {
-	ctx := InitContext(*HelpInitConfig())
+	ctx := wxofficial.InitContext(*HelpInitConfig())
 
 	token := ctx.GetAccessToken()
 	fmt.Println(ctx)
@@ -51,5 +52,5 @@ func Test(t *testing.T) {
 		ErrInfo:   util.ErrInfo{},
 	}
 	json.Unmarshal([]byte(js), At)
-	fmt.Println("%+V", At)
+	fmt.Printf("%#v", At)
 }

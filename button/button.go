@@ -1,4 +1,6 @@
-package menu
+package button
+
+import json "github.com/json-iterator/go"
 
 type Button struct {
 	Name      string   `json:"name"`       // 菜单标题
@@ -9,4 +11,13 @@ type Button struct {
 	AppId     string   `json:"appid"`      // 小程序的appid
 	PagePath  string   `json:"pagepath"`   // 小程序的页面路径
 	SubButton []Button `json:"sub_button"` // 二级菜单，数量为0~5个
+}
+
+func JsonToButton(st string) (*Button, error) {
+	bt := new(Button)
+	err := json.Unmarshal([]byte(st), bt)
+	if err != nil {
+		return nil, err
+	}
+	return bt, nil
 }
