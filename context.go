@@ -2,6 +2,7 @@ package wxofficial
 
 import (
 	"github.com/star-os/wxofficial/accesstoken"
+	"github.com/star-os/wxofficial/util"
 	"sync"
 )
 
@@ -24,12 +25,20 @@ type Context struct {
 func NewContext(token, encodingAESKey, appId, appSecret string) *Context {
 	config := NewConfig(token, encodingAESKey, appId, appSecret)
 	context := &Context{
-		Config:           *config,
-		AccessToken:      accesstoken.AccessToken{},
+		Config: *config,
+		AccessToken: accesstoken.AccessToken{
+			AToken:    "",
+			ExpiresIn: 7200,
+			ErrInfo:   util.ErrInfo{},
+		},
 		UpdateChan:       make(chan int, 5),
 		mAccessTokenLock: sync.RWMutex{},
 	}
 
+	err := context.UpdateAccessToken()
+	if err != nil {
+		panic(err)
+	}
 	go context.accessTokenUpdateDaemon()
 	return context
 }

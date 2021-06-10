@@ -31,6 +31,17 @@ func View(name, url string) *Button {
 	}
 }
 
+// MiniProgram 创建小程序按钮
+func MiniProgram(name, url, appid, pagepath string) *Button {
+	return &Button{
+		Name:     name,
+		Type:     "miniprogram",
+		Url:      url,
+		AppId:    appid,
+		PagePath: pagepath,
+	}
+}
+
 // ScanCodePush 创建scancode_push按钮
 func ScanCodePush(name, key string) *Button {
 	return &Button{

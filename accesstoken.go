@@ -41,13 +41,6 @@ func (c *Context) accessTokenUpdateDaemon() {
 	ticker := time.NewTicker(time.Duration(c.ExpiresIn - accesstoken.ExpireForward))
 
 	for {
-		go func() {
-			err := c.checkAccessTokenError()
-			if err != nil {
-				// log
-			}
-		}()
-
 		select {
 		case <-ticker.C: // 计时主动刷新AccessToken
 			err := c.UpdateAccessToken()
@@ -61,6 +54,13 @@ func (c *Context) accessTokenUpdateDaemon() {
 			}
 			ticker.Reset(time.Duration(c.ExpiresIn - accesstoken.ExpireForward))
 		}
+
+		go func() {
+			err := c.checkAccessToken()
+			if err != nil {
+				// log
+			}
+		}()
 	}
 }
 
@@ -76,9 +76,13 @@ func (c *Context) getUrlWithAT(url string) string {
 
 // 检查AccessToken中错误信息
 // true表示当前AccessToken正常
-func (c *Context) checkAccessTokenError() error {
+func (c *Context) checkAccessToken() error {
 	c.mAccessTokenLock.RLock()
 	defer c.mAccessTokenLock.RUnlock()
+	if c.AToken == "" {
+		c.UpdateChan <- c.ErrCode
+		return errors.New(fmt.Sprintf("AccessToken Not Set"))
+	}
 	switch c.ErrCode {
 	case 0: // 请求成功
 		return nil

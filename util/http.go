@@ -7,19 +7,17 @@ import (
 	"net/http"
 )
 
-// ErrInfo 是微信平台返回的通用错误信息定义
-// 用于避免重复定义
-type ErrInfo struct {
-	ErrCode int    `json:"errcode"`
-	ErrMsg  string `json:"errmsg"`
-}
-
-// HttpPostJSON 用于发送携带JSON数据的HTTP POST请求
+// HttpPostJSON 会先将obj转换为json，再发送HTTP POST请求
 func HttpPostJSON(url string, obj interface{}) ([]byte, error) {
 	data, err := json.Marshal(obj)
 	if err != nil {
 		return nil, err
 	}
+	return HttpPost(url, data)
+}
+
+// HttpPost 发送HTTP POST请求
+func HttpPost(url string, data []byte) ([]byte, error) {
 	// 可能要考虑JSON中转义字符的问题
 	body := bytes.NewReader(data)
 
